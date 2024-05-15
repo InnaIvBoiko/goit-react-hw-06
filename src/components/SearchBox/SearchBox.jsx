@@ -3,13 +3,12 @@ import { selectNameFilter, changeFilter } from '../../redux/filtersSlice';
 import css from './SearchBox.module.css';
 
 export default function SearchBox() {
-    const dispatch = useDispatch;
     const filter = useSelector(selectNameFilter);
 
-    const handleFilterChange = event => {
-        console.log(event.currentTarget.value)
-    dispatch(changeFilter(event.target.value));
-  };
+    const dispatch = useDispatch();
+    const handleFilterChange = (event) => {
+        dispatch(changeFilter(event.target.value));
+    };
 
     return (
         <div className={css.search}>
@@ -17,9 +16,9 @@ export default function SearchBox() {
             <input
                 className={css.input}
                 type='text'
-                name='filters'
+                name='filter'
                 value={filter}
-                onChange={handleFilterChange}
+                onChange={ handleFilterChange }
             />
         </div>
     );
