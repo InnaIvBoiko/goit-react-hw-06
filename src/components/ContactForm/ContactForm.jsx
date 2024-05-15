@@ -1,3 +1,6 @@
+import { useDispatch } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
+import { addContact } from '../../redux/contactsSlice';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import css from './ContactForm.module.css';
@@ -15,12 +18,19 @@ const ContactSchema = Yup.object().shape({
         .required('This field is required!'),
 });
 
-export default function ContactForm({ onAdd }) {
+export default function ContactForm() {
+    const dispatch = useDispatch();
+
     const nameId = useId();
     const numberId = useId();
 
     const handleSubmit = (values, actions) => { 
-        onAdd(values);
+        const newContact = {
+            id: nanoid(),
+            name: values.name.trim(),
+            number: values.number.trim(),
+        };
+        dispatch(addContact(newContact));
         actions.resetForm();
     };
     
